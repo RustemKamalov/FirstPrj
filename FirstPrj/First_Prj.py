@@ -1,6 +1,6 @@
 import sys
 x = int(input())
-y = 0
+y = 1
 while x > 0:
     z = int(input())
     y = y + z
