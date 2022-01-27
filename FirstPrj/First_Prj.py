@@ -1,17 +1,31 @@
-class MoneyBox:
-    def __init__(self, capacity = 100):
-        self.full_count = capacity
-        self.count = 0
+class Buffer:
+    def __init__(self):
+        self._list = []
+        self._sum = 0
 
-    def can_add(self, v):
-        if self.count + v <= self.full_count:
-            return True
-        return False
+    def add(self, *a):
+        count = len(self._list)
+        for i in a:
+            if count < 5:
+                self._list.append(i)
+                count += 1
+                self._sum += i
+                if count == 5:
+                    print(self._sum)
+                    count = 0
+                    self._list = []
+                    self._sum = 0
 
-    def add(self, v):
-        if self.can_add(v):
-            self.count += v
+    def get_current_part(self):
+        return self._list
 
-n = int(input())
-money_box = MoneyBox(n)
-money_box.add(12)
+
+buf = Buffer()
+buf.add(1, 2, 3)
+print(buf.get_current_part())
+buf.add(4, 5, 6)
+print(buf.get_current_part())
+buf.add(7, 8, 9, 10)
+print(buf.get_current_part())
+buf.add(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+print(buf.get_current_part())
