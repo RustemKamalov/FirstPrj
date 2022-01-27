@@ -1,20 +1,13 @@
 class Buffer:
     def __init__(self):
         self._list = []
-        self._sum = 0
 
     def add(self, *a):
-        count = len(self._list)
         for i in a:
-            if count < 5:
-                self._list.append(i)
-                count += 1
-                self._sum += i
-                if count == 5:
-                    print(self._sum)
-                    count = 0
-                    self._list = []
-                    self._sum = 0
+            self._list.append(i)
+            if len(self._list) == 5:
+                print(sum(self._list))
+                self._list.clear()
 
     def get_current_part(self):
         return self._list
