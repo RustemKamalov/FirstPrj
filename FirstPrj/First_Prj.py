@@ -1,50 +1,46 @@
-def Find_Parent(_par, _child):
-    k = 0
-    found_param = _child
-    list_tmp = []
-    list_found = [_child]
-    while k == 0:
-        k = 1
-        new_list = []
-        for key, index in parent.items():
-            list_tmp = index.split()
-            res = [x for x in list_tmp + list_found if x in list_tmp and x in list_found]
-            if res:
-                if key == _par or _child == _par:
-                    return "Yes"
-                k = 0
-                new_list.append(key)
-        list_found = list(new_list)
-    return "No"
+def is_parent(child, parent):
+    if child == parent:
+        return True
+    for p in parents[child]:
+        if is_parent(p, parent):
+            return True
+    return False
+
+
+def bubbleSort(data):
+    lenght = len(data)
+    for iIndex in range(lenght):
+        swapped = False
+        for jIndex in range(0, lenght - iIndex - 1):
+            if data[jIndex] > data[jIndex + 1]:
+                data[jIndex], data[jIndex + 1] = data[jIndex + 1], data[jIndex]
+                c[jIndex], c[jIndex + 1] = c[jIndex + 1], c[jIndex]
+                swapped = True
+        if swapped == False:
+            break
 
 
 n = int(input())
 
-parent = {"global": ""}
-list_check = []
-list_pmp = []
-
+parents = {}
 for _ in range(n):
-    list_pmp = input().split(":")
-    if len(list_pmp) == 2:
-        list_tmp = list_pmp[1].replace(" ", "", 1).split()
-        for i in list_tmp:
-            try:
-                _str = parent[i] + " " + list_pmp[0].replace(" ", "", 1)
-                parent[i] = _str
-            except:
-                parent[i] = list_pmp[0].replace(" ", "", 1)
-    else:
-        if parent["global"] == "":
-            _str = list_pmp[0].replace(" ", "", 1)
-        else:
-            _str = parent["global"] + " " + list_pmp[0].replace(" ", "", 1)
-        parent["global"] = _str
+    a = input().split()
+    parents[a[0]] = [] if len(a) == 1 else a[2:]
 
-n = int(input())
-for _ in range(n):
-    list_check.append(input())
+q = int(input())
+b = []
+c = []
+n = []
+for _ in range(q):
+    a = input()
+    b.append(a)
 
-for ch in list_check:
-    _par, _child = ch.split()
-    print(Find_Parent(_par, _child))
+for i in range(len(b)):
+    for j in range(i + 1, len(b)):
+        if is_parent(b[j], b[i]):
+            if b[j] not in c:
+                n.append(j)
+                c.append(b[j])
+bubbleSort(n)
+for s in c:
+    print(s)
