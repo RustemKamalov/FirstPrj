@@ -15,21 +15,27 @@ class multifilter:
         # iterable - исходная последовательность
         # funcs - допускающие функции
         # judge - решающая функция
-        self.iterable = []
-        for i in iterable:
-            self.pos = 0
-            self.neg = 0
-            for f in funcs:
-                if f(i):
-                    self.pos += 1
-                else:
-                    self.neg += 1
-            if judge(self.pos, self.neg):
-                self.iterable.append(i)
+        self.iterator = iter(iterable)
+        self.funcs = funcs
+        self.judge = judge
 
     def __iter__(self):
         # возвращает итератор по результирующей последовательности
-        return iter(self.iterable)
+        return self
+
+    def __next__(self):
+        while True:
+            elem = next(self.iterator)
+            pos, neg = 0, 0
+            for func in self.funcs:
+                if func(elem):
+                    pos += 1
+                else:
+                    neg += 1
+
+            if self.judge(pos, neg):
+                return elem
+
 
 
 def mul2(x):
@@ -45,6 +51,11 @@ def mul5(x):
 
 
 a = [i for i in range(31)] # [0, 1, 2, ... , 30]
+b = multifilter(a,  mul2, mul3, mul5, judge=multifilter.judge_all)
+c = iter(b)
+print(next(c))
+print(next(c))
+
 print(list(multifilter(a, mul2, mul3, mul5)))
 print(list(multifilter(a, mul2, mul3, mul5, judge=multifilter.judge_half)))
 print(list(multifilter(a, mul2, mul3, mul5, judge=multifilter.judge_all)))
