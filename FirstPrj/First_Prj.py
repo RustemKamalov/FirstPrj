@@ -1,17 +1,12 @@
-import itertools
+file_read = open("test.txt")
+file_write = open("test_w.txt", "w")
+lst_read = [line.rstrip() for line in file_read]
+new_lst = lst_read[::-1]
+line_write = '\n'.join(new_lst)
+file_write.write(line_write)
+file_write.close()
+file_read.close()
 
 
-def primes():
-    s = 1
-    lst = []
-    while True:
-        s += 1
-        for j in lst:
-            if s % j == 0:
-                break
-        else:
-            lst.append(s)
-            yield s
 
 
-print(list(itertools.takewhile(lambda x : x <= 31, primes())))
