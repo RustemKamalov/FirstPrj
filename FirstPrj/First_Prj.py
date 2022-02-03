@@ -1,12 +1,10 @@
-file_read = open("test.txt")
-file_write = open("test_w.txt", "w")
-lst_read = [line.rstrip() for line in file_read]
-new_lst = lst_read[::-1]
-line_write = '\n'.join(new_lst)
-file_write.write(line_write)
-file_write.close()
-file_read.close()
+import os
+import os.path
 
-
-
+with open("test_w.txt", "w") as out:
+    for current_dir, dirs, files in os.walk("main"):
+        for _ in os.listdir(current_dir):
+            if _.endswith(".py"):
+                out.write(current_dir + "\n")
+                break
 
